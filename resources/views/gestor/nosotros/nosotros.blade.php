@@ -9,7 +9,7 @@
 	<form  action="{{ url('app/nosotros/1') }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
 	{{ csrf_field() }}
 		<ul class="nav nav-tabs">
-			<button type="submit" class="gr">Guardar</button>
+			<button type="submit" class="btn btn-colegio" style="margin-left:20px">Guardar</button>
 			<li class="active"><a  href="#1" data-toggle="tab">Bienvenida</a></li>
 			<li><a href="#2" data-toggle="tab">Visión</a></li>
 			<li><a href="#3" data-toggle="tab">Misión</a></li>

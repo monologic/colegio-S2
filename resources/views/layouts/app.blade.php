@@ -8,6 +8,7 @@
     <title>Sistema Robert Gagne</title>
 
     <link href="{{ asset('assets/login/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/theme-blue.css') }}" rel="stylesheet">
 
 
 </head>

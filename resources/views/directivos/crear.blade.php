@@ -6,6 +6,11 @@
 	<div class="container">
 		<div class="cart"  style="max-width: 600px">
 			<h1 class="titulo">Crear Directivo</h1>
+			@if (isset($error))
+			    <div class="alert alert-danger">
+			        {{ $error }}
+			    </div>
+			@endif
 			<form role="form" method="POST" action="{{ url('app/directivos') }}">
 				{{ csrf_field() }}
 				<div class="form-group">

@@ -39,7 +39,14 @@ class VideoController extends Controller
         $video = new Video($request->all());
         $es1 = $video->url;
         $porciones = explode("=", $es1);
-        $fn ='https://www.youtube.com/embed/'.$porciones[1].'?autoplay=0';
+        //dd($porciones);
+        if (count($porciones) > 1)
+            $fn ='https://www.youtube.com/embed/'.$porciones[1].'?autoplay=0';
+        else{
+            $arg = explode("/", $es1);
+            $fn ='https://www.youtube.com/embed/'.$arg[3].'?autoplay=0';
+        }
+        $video->fecha = date("Y-m-d");
         $video->url = $fn ;
         $video->save();
         return redirect('app/album');

@@ -20,9 +20,9 @@ app.controller('archivoController', function($scope,$http) {
     }
 
     $scope.plus = function (data) {
-
+        console.log(data);
         $scope.id = data.id;
-        $scope.formUrl = 'archivo/' + data.id;
+        $scope.formUrl = 'archivos/' + data.id;
         $scope.descrip = data.decripcion;
         $scope.titulom = data.titulo;
         $scope.autorm = data.autor;
@@ -33,6 +33,8 @@ app.controller('archivoController', function($scope,$http) {
         $scope.solofec =  $scope.fecham[0];
         $scope.edicion = data.edicion;
         $scope.archivo = data.archivo;
+        $('#archivotipo_id').val(data.archivotipo.id);
+        //$scope.archivotipo_id = data.archivotipo.id;
         /*
         $scope.archivoUrl = 'https://drive.google.com/viewerng/viewer?url=http://robert.runait.com/archivos/' + $scope.archivo + '?pid=explorer&efh=false&a=v&chrome=false&embedded=true';
         html = "<iframe src=" + $scope.archivoUrl + " width='90%' height='500px'></iframe>";
@@ -53,12 +55,19 @@ app.controller('archivoController', function($scope,$http) {
             cancelButtonText:"Cancelar", }, 
             function(){
 
-                swal("Eliminado!", 
-                    "El registro se ha eliminado.", 
-                    "success"); 
-
                 $http.delete( 'archivos/'+id ).then(function successCallback(response) {
-                    $scope.archivos = response.data;
+                    
+                    swal({  title: "Eliminado!",
+                        text: "El registro se ha eliminado.",
+                        type: "success",   
+                        showCancelButton: false,
+                        confirmButtonText: "Aceptar",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false },
+                        function(){
+                            window.location.reload();
+                        });
+                    
                 }, function errorCallback(response) {
                     swal({   
                         title: "Ha ocurrido un error!",   
@@ -77,5 +86,21 @@ app.controller('archivoController', function($scope,$http) {
 
     $scope.guardarArchivo = function () {
         $( "#formGuardar" ).submit();
+    }
+
+    $scope.ordenar = function () {
+        $( "#ordenarForm" ).submit();
+    }
+
+    $scope.setSelect = function () {
+        var URLactual = window.location + '';
+        a = URLactual.split("?");
+        if(a[1] != undefined){
+            b = a[1].split("=");
+            $scope.ordenar_por = b[1];
+        }
+
+        
+
     }
 });

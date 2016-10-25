@@ -6,6 +6,11 @@
 	<div class="container">
 		<div class="cart"  style="max-width: 600px">
 		<h1 class="titulo">Crear Docente</h1>
+				@if (isset($error))
+				    <div class="alert alert-danger">
+				        {{ $error }}
+				    </div>
+				@endif
     		<div>
     			<form role="form" method="POST" action="{{ url('app/docentes') }}">
     				{{ csrf_field() }}

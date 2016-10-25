@@ -15,7 +15,7 @@
                     <div class="meta">
 
                         <time class="published" datetime="2015-11-01">{{ $novededa->fecha }}</time>
-                        <a href="#" class="author"><span class="name">{{ $novededa->autor }}</span><img src="../images/avatar.jpg" alt="" /></a>
+                        <p class="name text-center">{{ $novededa->autor }}</p>
                     </div>
                 </header>
                 <a href="#" class="image featured"><img src="../imagen/novedades/{{ $novededa->foto }}" alt="" /></a>

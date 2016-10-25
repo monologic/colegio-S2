@@ -17,6 +17,12 @@
             <p>Actividades</p>
         </a>
     </li>
+    <li>
+        <a href="{{ url('app/agenda') }}">
+            <i class="pe-7s-note"></i>
+            <p>Agenda</p>
+        </a>
+    </li>
     <li class="out-salir" style="display: none">
         <a  href="{{ url('logout') }}">
             <i class="pe-7s-back-2"></i>

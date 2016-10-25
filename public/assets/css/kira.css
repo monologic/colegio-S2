@@ -1,3 +1,6 @@
+#header{
+	background-color:#710301
+}
 input[type="submit"] {
 		-moz-appearance: none;
 		-webkit-appearance: none;
@@ -47,12 +50,20 @@ input[type="submit"] {
 	-webkit-transform:translate(-50%,-50%);
 }
 .foot{
+	
 	display: block;
 	position: relative;
 	width: 100%;
+	background-color: #710301;
 	color: white;
 	bottom: 0;
 	padding: 30px 0px 30px 0px;
+}
+.img-gal{
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 120px;
 }
 .titulo-slider{
 	display: block;
@@ -132,8 +143,8 @@ input[type="submit"] {
 .insig{
 	display: block;
 	position: relative;
-	width: 160px;
-	height: 200px;
+	width: 120px;
+	height: 90px;
 	margin: 0px auto 10px auto;
 
 }
@@ -425,14 +436,13 @@ input[type="submit"] {
 		}
 div.bhoechie-tab-container{
   z-index: 0;
-  width: 90%;
+  width: 100%;
   background-color: #ffffff;
   padding: 0 !important;
   border-radius: 4px;
   -moz-border-radius: 4px;
   border:1px solid #ddd;
   margin-top: 20px;
-  margin-left: 50px;
   -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -453,7 +463,7 @@ div.bhoechie-tab-menu div.list-group>a{
 }
 div.bhoechie-tab-menu div.list-group>a .glyphicon,
 div.bhoechie-tab-menu div.list-group>a .fa {
-  color: #192473;
+  color: #96281B;
 }
 div.bhoechie-tab-menu div.list-group>a:first-child{
   border-top-right-radius: 0;
@@ -466,8 +476,8 @@ div.bhoechie-tab-menu div.list-group>a:last-child{
 div.bhoechie-tab-menu div.list-group>a.active,
 div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
 div.bhoechie-tab-menu div.list-group>a.active .fa{
-  background-color: #192473;
-  background-image: #192473;
+  background-color: #96281B;
+  background-image: #96281B;
   color: #ffffff;
 }
 div.bhoechie-tab-menu div.list-group>a.active:after{
@@ -479,7 +489,7 @@ div.bhoechie-tab-menu div.list-group>a.active:after{
   border-left: 0;
   border-bottom: 13px solid transparent;
   border-top: 13px solid transparent;
-  border-left: 10px solid #192473;
+  border-left: 10px solid #96281B;
 }
 
 div.bhoechie-tab-content{
@@ -492,3 +502,8 @@ div.bhoechie-tab-content{
 div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   display: none;
 }
+.bhoechie-tab-content p img{
+	max-width:100%;
+	height: auto; 
+}
+

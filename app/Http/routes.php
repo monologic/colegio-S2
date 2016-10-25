@@ -45,6 +45,16 @@ Route::group(['prefix'=> 'app', 'middleware' => [ 'auth', 'web' ]], function(){
 	    return view('templates.menu.usuario');
 	});
 
+	Route::get('estadistica', function () {
+		return view('gestor.estadistica.ver');
+	});
+
+	Route::get('/getUsuarios','UserController@getUsuarios');
+	Route::get('/usuarios', function () {
+	    return view('templates.menu.usuario');
+	});
+	Route::get('getEstadisticas/{dni}','EstadisticasController@getDatos');
+
 	Route::get('perfil', function () {
 		return view('usuarios.perfil');
 	});
@@ -130,6 +140,12 @@ Route::group(['prefix'=> 'app', 'middleware' => [ 'auth', 'web' ]], function(){
 	    Route::get('getActividad/{id}', 'ActividadController@getActividad');
 		Route::resource('actividades', 'ActividadController');
 		Route::get('acti/{id}', 'ActividadController@getdia');
+		Route::get('ac/{fecha}', 'ActividadController@getmes');
+		
+		Route::post('agenda/{id}', 'AgendaController@update');
+		Route::resource('agenda', 'AgendaController');
+		Route::get('getEntradas', 'AgendaController@getEntradas');
+
 
 	});
 

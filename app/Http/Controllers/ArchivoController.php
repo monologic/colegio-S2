@@ -18,13 +18,29 @@ class ArchivoController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request);
+        $valor = null;
+        $tipo = null;
         
-        $archivos = Archivo::search($request->valor, $request->archivotipo_id)->orderBy('created_at','DESC')->paginate(10);
+        if (count($request->all()) > 1) {
+            if ($request->valor != null || $request->valor == "")
+                session(['busqueda' => [$request->valor, $request->archivotipo_id]]);
+        }
+
+        $busqueda = session('busqueda');
+        if ($busqueda != null) {
+            $valor = $busqueda[0];
+            $tipo = $busqueda[1];
+        }
+
+        $ordenar = ($request->ordenar) ? $request->ordenar : 'titulo' ;
+        $archivos = Archivo::search($valor, $tipo)->orderBy($ordenar ,'ASC')->paginate(100);
         $archivos->each(function($archivos){
             $archivos->archivotipo;
         });
-        return view('biblioteca.ver')->with('archivos', $archivos);
+        
+        return view('biblioteca.ver')->with('archivos', $archivos)->with('valor', $valor)->with('tipo', $tipo);
+       
+        
     }
 
     /**
@@ -108,21 +124,23 @@ class ArchivoController extends Controller
     public function update(Request $request, $id)
     {
         $archivo = Archivo::find($id);
+        $archivo->fill($request->all());
         if($request->file('archivo'))
         {
 
             $file = $request -> file('archivo');
             $tipo = $file->getClientOriginalExtension();
             if ($tipo == 'pdf' || $tipo == 'mp3') {
-                $name = 'noticia_'. time() . '.' .$file->getClientOriginalExtension();
+                $name = 'archivo_'. time() . '.' .$file->getClientOriginalExtension();
                 $path=public_path() . "/archivos/";
                 $file -> move($path,$name);
+                $archivo->archivo = $name;
             }
             else
                 dd('Tipo de Archivo no permitido, Solo se permiten archivos PDF y audio en mp3');
             
         }
-        $archivo->fill($request->all());
+        
         $archivo->save();
         return redirect('app/archivos');
     }

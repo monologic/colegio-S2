@@ -48,14 +48,20 @@ class EstudianteController extends Controller
      */
     public function store(Request $request)
     {
-        $estudiante = new User($request->all());
-        $estudiante->usuariotipo_id = 1;
-        $estudiante->usuario = $request->dni;
-        $estudiante->password = bcrypt($request->dni);
+        $u = User::where('dni', $request->dni)->get();
+        if (count($u) == 0) {
+            $estudiante = new User($request->all());
+            $estudiante->usuariotipo_id = 1;
+            $estudiante->usuario = $request->dni;
+            $estudiante->password = bcrypt($request->dni);
 
-        $estudiante->save();
-        return redirect('app/estudiantes');
-        
+            $estudiante->save();
+            return redirect('app/estudiantes');
+        }
+        else{
+            $error = 'Este dni ya está siendo usado';
+            return view('estudiantes.crear')->with('error', $error);
+        }
     }
 
     /**

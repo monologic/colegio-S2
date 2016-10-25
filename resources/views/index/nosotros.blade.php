@@ -30,24 +30,24 @@
 					@foreach ($nosotros[0] as $nosotro)
 		                <!-- train section -->
 		                <div class="bhoechie-tab-content active">
-		                      <h1 class="text-center" style="font-size:1.4em;color:#192473;margin-top: 30px">Bienvenida</h1>
+		                      <h1 class="text-center" style="font-size:1.4em;color:#96281B;margin-top: 30px">Bienvenida</h1>
 		                      <p class="texts">{!! $nosotro->bienvenida !!}</p>
 		                </div>
 		                <div class="bhoechie-tab-content">
-		                      <h1 class="text-center" style="font-size:1.4em;color:#192473;margin-top: 30px">Visión</h1>
+		                      <h1 class="text-center" style="font-size:1.4em;color:#96281B;margin-top: 30px">Visión</h1>
 		                      <p>{!!$nosotro->vision!!}</p>
 		                </div>
 		                <div class="bhoechie-tab-content">
-		                      <h1 class="text-center" style="font-size:1.4em;color:#192473;margin-top: 30px">Misión</h1>
+		                      <h1 class="text-center" style="font-size:1.4em;color:#96281B;margin-top: 30px">Misión</h1>
 		                      <p>{!!$nosotro->mision!!}</p>
 		                </div>
 		                <div class="bhoechie-tab-content">
-		                      <h1 class="text-center" style="font-size:1.4em;color:#192473;margin-top: 30px">Historia</h1>
+		                      <h1 class="text-center" style="font-size:1.4em;color:#96281B;margin-top: 30px">Historia</h1>
 		                      <p>{!!$nosotro->historia!!}</p>
 		                </div>
 		    		@endforeach 
 		            	<div class="bhoechie-tab-content">
-		                      <h1 class="text-center" style="font-size:1.4em;color:#192473;margin-top: 30px">Directorio</h1>
+		                      <h1 class="text-center" style="font-size:1.4em;color:#96281B;margin-top: 30px">Directorio</h1>
 		                  	@foreach ($nosotros[1] as $n)
 
 		                  	<section style="width: 100%;margin-bottom: 20px">

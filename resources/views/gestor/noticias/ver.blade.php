@@ -17,7 +17,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="x in noticias" ng-if="{{Auth::user()->dni}} ==  x.posteador ">
+                            <tr ng-repeat="x in noticias" ng-if="{{Auth::user()->id}} ==  x.posteador ">
                                 <td>@{{ x.solofe }}</td>
                                 <td>@{{ x.titulo }}</td>
                                 <td>@{{ x.copete }}</td>
@@ -96,7 +96,7 @@
                                         <label for="fecha">Fecha de publicación</label>
                                         <input type="datetime-local" class="form-control" id="fecha" placeholder="2016-01-01 12:00" name="fecha" ng-model="fecha" required>
                                     </div>
-                                    <input type="hidden" name="posteador" value="{{Auth::user()->dni}}">
+                                    <input type="hidden" name="posteador" value="{{Auth::user()->id}}">
                                     <a ng-click='editarNoticia()' class="btn btn-colegio">Guardar</a>
                                 </form>
                             </div>

@@ -68,7 +68,7 @@
 						    <textarea class="form-control"  id="decripcion" name="decripcion" cols="30" rows="5"></textarea>
 						    
 						</div>
-						<input type="hidden" name="posteador" value="{{Auth::user()->dni}}">
+						<input type="hidden" name="posteador" value="{{Auth::user()->id}}">
 						<button type="submit" class="btn btn-colegio">Guardar</button>
 	    			</form>
 	    		</div>

@@ -48,13 +48,20 @@ class DirectivoController extends Controller
      */
     public function store(Request $request)
     {
-        $docente = new User($request->all());
-        $docente->usuariotipo_id = 4;
-        $docente->usuario = $request->dni;
-        $docente->password = bcrypt($request->dni);
+        $u = User::where('dni', $request->dni)->get();
+        if (count($u) == 0) {
+            $docente = new User($request->all());
+            $docente->usuariotipo_id = 4;
+            $docente->usuario = $request->dni;
+            $docente->password = bcrypt($request->dni);
 
-        $docente->save();
-        return redirect('app/directivos');
+            $docente->save();
+            return redirect('app/directivos');
+        }
+        else{
+            $error = 'Este dni ya está siendo usado';
+            return view('directivos.crear')->with('error', $error);
+        }
         
     }
 

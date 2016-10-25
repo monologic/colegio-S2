@@ -8,5 +8,5 @@ class video extends Model
 {
     public $timestamps = false;
     
-    protected $fillable = ['nombre', 'descripcion', 'url'];
+    protected $fillable = ['nombre', 'descripcion', 'url','posteador','fecha'];
 }

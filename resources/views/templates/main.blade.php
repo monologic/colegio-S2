@@ -33,11 +33,13 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
 
 		<link rel="stylesheet" href="{{ asset('assets/calendar/css/monthly.css')}}">
+		<link rel="stylesheet" href="{{ asset('assets/morris/morris.css')}}">
+		<link rel="stylesheet" href="{{asset('assets/css/theme-blue.css')}}" />
 		
 	</head>
 	<body class="body">
 		<div class="wrapper">
-		    <div class="sidebar" data-color="blue" data-image="{{asset('assets/img/sidebar-5.jpg')}}">
+		    <div class="sidebar" data-color="robert" data-image="{{asset('assets/img/sidebar-5.jpg')}}">
 
 		    <!--
 
@@ -49,7 +51,7 @@
 		    	<div class="sidebar-wrapper">
 		            <div class="logo">
 		                <a  class="simple-text">
-		                    <img src="{{asset('images/logo.png')}}" width="100" height="90">
+		                    <img src="{{asset('images/txt2.png')}}" width="100" height="90">
 		                </a>
 		            </div>
 					@if (Auth::user()->usuariotipo_id == "1")
@@ -74,7 +76,7 @@
 		    </div>
 
 		    <div class="main-panel">
-		        <nav class="navbar navbar-default navbar-fixed" style="background-color:white">
+		        <nav class="navbar navbar-default navbar-fixed">
 		            <div class="container-fluid">
 		                <div class="navbar-header">
 		                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2" onclick="menu()">
@@ -83,7 +85,7 @@
 		                        <span class="icon-bar"></span>
 		                        <span class="icon-bar"></span>
 		                    </button>
-		                    <h1 style="margin-top: 5px"><a href="/"><img src="{{asset('images/txt3.png')}}" alt="" width="120" height="50" /></a></h1>
+		                    <h1 style="margin-top: 5px"><a href="/"><img src="{{asset('images/logo_izq.jpg')}}" alt="" width="160" height="auto" /></a></h1>
 		                </div>
 		                <div class="collapse navbar-collapse">
 							 <ul class="nav navbar-nav navbar-right">
@@ -107,6 +109,7 @@
 						<script src="{{ asset('assets/angular/angular.min.js') }}"></script>
 						<script src="{{ asset('assets/js/ng-scripts/app.js') }}"></script>
 						<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+						<script src="{{ asset('assets/morris/morris.js') }}"></script>
 		            	@yield('content')
 		        	</div>
 				</div><!-- /container -->

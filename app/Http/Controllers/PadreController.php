@@ -50,13 +50,20 @@ class PadreController extends Controller
      */
     public function store(Request $request)
     {
-        $padre = new User($request->all());
-        $padre->usuariotipo_id = 5;
-        $padre->usuario = $request->dni;
-        $padre->password = bcrypt($request->dni);
+        $u = User::where('dni', $request->dni)->get();
+        if (count($u) == 0) {
+            $padre = new User($request->all());
+            $padre->usuariotipo_id = 5;
+            $padre->usuario = $request->dni;
+            $padre->password = bcrypt($request->dni);
 
-        $padre->save();
-        return redirect('app/padres');
+            $padre->save();
+            return redirect('app/padres');
+        }
+        else{
+            $error = 'Este dni ya está siendo usado';
+            return view('padres.crear')->with('error', $error);
+        }
         
     }
 

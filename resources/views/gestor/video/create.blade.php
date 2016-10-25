@@ -21,7 +21,7 @@
 						    <label for="url">Url</label>
 						    <input type="text" class="form-control" id="url" placeholder="" name="url" required>
 						</div>
-						
+						<input type="hidden" name="posteador" value="{{Auth::user()->id}}">
 						<button type="submit" class="btn btn-colegio">Guardar</button>
 	    			</form>
 	    		</div>

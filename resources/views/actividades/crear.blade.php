@@ -27,9 +27,17 @@
 					    <input type="datetime-local" class="form-control" id="fecha_fin" ng-model="fecha_fin" placeholder="2016-01-01 12:00" name="fecha_fin" required>
 					</div>
 					<div class="form-group">
-						    <b for="descripcion">Descripción</b>
-						    <textarea  id="" cols="50" rows="10" name="descripcion" class="edit"></textarea>
-						</div>
+					    <b for="descripcion">Descripción</b>
+					    <textarea  id="" cols="50" rows="10" name="descripcion" class="edit"></textarea>
+					</div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <select class="form-control" name="tipo" id="tipo" ng-model="tipo" required>
+                            <option value="Curricular">Curricular</option>
+                            <option value="Extracurricular">Extracurricular</option>
+                            <option value="Cocurricular">Co-curricular</option>
+                        </select>
+                    </div>
 					<div class="form-group">
 					    <label for="lugar">Lugar</label>
 					    <input type="text" class="form-control" id="lugar" ng-model="lugar" placeholder="" name="lugar" required>

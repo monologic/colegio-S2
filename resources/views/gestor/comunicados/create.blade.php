@@ -35,7 +35,7 @@
 						    <label for="fecha_pub">Fecha de publicación</label>
 						    <input type="datetime-local" class="form-control" id="fecha_pub" placeholder="" name="fecha_pub" required>
 						</div>
-						<input type="hidden" name="posteador" value="{{Auth::user()->dni}}">
+						<input type="hidden" name="posteador" value="{{Auth::user()->id}}">
 						
 						
 						<button type="submit" class="btn btn-colegio">Guardar</button>

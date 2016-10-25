@@ -1,26 +1,40 @@
 app.controller('actividadController', function($scope,$http) {
-    
     $scope.get = function () {
         $http.get('getActividades').then(function successCallback(response) {
                 data = response.data;
-                for(i in data){
-                    rs=data[i].fecha_inicio;
-                    $scope.fe = rs.split(' ');
-                    data[i].solofe = $scope.fe[0];
-                    data[i].soloho = $scope.fe[1];
-                }
                 $scope.actividades = data;
             }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
             });
     }
+    $scope.getmes = function () {
 
+        var f = new Date();
+        fe = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+
+        $http.get('ac/'+fe).then(function successCallback(response) {
+            data = response.data;
+            $scope.imprimir(data);
+        }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        });
+    }
+    $scope.imprimir = function (data){
+        for (var i = 0; i < data.length; i++) {
+            rd = data[i].fecha.split(' ');
+            a = rd[0].split('-');
+            dia = a[2]+'-'+ a[1] + '-' + a[0];
+        }
+        
+    }
     $scope.plus = function (data) {
 
         $scope.id = data.id;
         $scope.responsable = data.responsable;
         $scope.titulo = data.titulo;
+        $scope.tipo = data.tipo;
         $scope.fecha_inicio = (data.fecha_inicio).replace(" ","T");
         $scope.fecha_fin = (data.fecha_fin).replace(" ","T");
         $('.fr-element').html(data.descripcion);
@@ -58,12 +72,14 @@ app.controller('actividadController', function($scope,$http) {
     }
 
     $scope.editar = function () {
+        def = $('#act-des').val();
         $http.put('actividades/' + $scope.id,
             {   'responsable':$scope.responsable,
                 'titulo':$scope.titulo,
                 'fecha_inicio':$scope.fecha_inicio,
                 'fecha_fin':$scope.fecha_fin,
-                'descripcion':$scope.descripcion,
+                'descripcion':def,
+                'tipo':$scope.tipo,
                 'lugar':$scope.lugar,
                 'participantes':$scope.participantes,
                 

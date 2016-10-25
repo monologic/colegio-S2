@@ -48,13 +48,20 @@ class AdministrativoController extends Controller
      */
     public function store(Request $request)
     {
-        $docente = new User($request->all());
-        $docente->usuariotipo_id = 3;
-        $docente->usuario = $request->dni;
-        $docente->password = bcrypt($request->dni);
+        $u = User::where('dni', $request->dni)->get();
+        if (count($u) == 0) {
+            $docente = new User($request->all());
+            $docente->usuariotipo_id = 3;
+            $docente->usuario = $request->dni;
+            $docente->password = bcrypt($request->dni);
 
-        $docente->save();
-        return redirect('app/administrativos');
+            $docente->save();
+            return redirect('app/administrativos');
+        }
+        else{
+            $error = 'Este dni ya está siendo usado';
+            return view('administrativos.crear')->with('error', $error);
+        }
         
     }
 

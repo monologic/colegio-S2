@@ -4,57 +4,71 @@
 @section('title', 'Biblioteca')
 
 @section('content')
-    <div ng-controller="archivoController" ng-init="getTipos();" >
+    <div ng-controller="archivoController" ng-init="getTipos(); setSelect();" >
         <div class="contenidosa" style="width: 98%">
-            <div class="">
+            <div class="row">
                 <h1 class="titulo text-center">Biblioteca Virtual</h1>
-                <div style="margin-left: 20px">
+                
+                <div style="margin-left: 15px">
                     <form class="form-inline" action="{{ url('app/archivos') }}" method="GET">
                         <label for="edicion">Tipo de archivo</label>
-                        <select class="form-control" name="archivotipo_id" ng-model="archivotipo_id" ng-options="at.tipo for at in ats track by at.id">
+                        <select class="form-control" name="archivotipo_id" id="tipoArchivo" ng-model="archivotipo_id" ng-options="at.tipo for at in ats track by at.id">
                         </select>
-                        <input type="text" class="form-control" id="valor" name="valor" >
+                        <input type="text" class="form-control" id="valor" name="valor" value="{{$valor}}" >
                         <button type="submit" class="btn btn-colegio">Buscar</button>
                     </form>
+                    <div id="field" data-field-id="{{$tipo}}" ></div>
+                        <script>
+                        // Asumning you are using JQuery
+                        $( window ).load(function() {
+                            var fieldId = $('#field').data("field-id");
+                            $("#tipoArchivo").val(fieldId);
+                        });
+                        </script>
+                </div><br>
+                <div class="col-md-8"> 
+                    <form class="form-inline" id="ordenarForm" action="{{ url('app/archivos') }}" method="GET">
+                            <label for="">Ordenar Por</label>
+                            <select class="form-control" name="ordenar" ng-model="ordenar_por" ng-change="ordenar()">
+                                <option value="titulo">Título</option>
+                                <option value="autor">Autor</option>
+                                <option value="archivotipo_id">Tipo de Documento</option>
+                            </select>
+                    </form>     
                 </div>
+            </div>
+                
             @if ( Auth::user()->usuariotipo_id == 1 || Auth::user()->usuariotipo_id == 5)
                 
                     @foreach ($archivos as $archivo)
                         <div class="cartA">
                             <div class="ta">{{ $archivo->titulo }}</div>
-                           <blockquote class="bro">
+                            <blockquote class="bro">
                                 <div> <b>Autor:</b>  {{ $archivo->autor }}</div>
-                                <div> <b>Publicación:</b>  {{ $archivo->created_at }}</div>
                                 <div> <b>Tipo :</b> {{ $archivo->archivotipo->tipo }}</div>
-                           </blockquote>
-                           <div> <b>Descripción :</b></div>
-                            <div> {{ $archivo->decripcion }}</div>
+                            </blockquote>
                             <button class="btn btn-colegio" ng-click="plus({{ $archivo }});" data-toggle="modal" data-target="#mas"><i class="fa fa-plus"> </i> Información</button>
                             <a href="archivo/{{ $archivo->id }}" alt="archivo" class="btn btn-colegio" /><i class="fa fa-eye" aria-hidden="true"></i> Ver Documento</a> 
                         </div>
                     @endforeach 
                     {!! $archivos->render() !!} 
-                </div>  
+               
             @endif
             @if ( Auth::user()->usuariotipo_id == 2 || Auth::user()->usuariotipo_id == 3 || Auth::user()->usuariotipo_id == 4)
             <div class="col-md-8">
                 @foreach ($archivos as $archivo)
                         <div class="cartA">
                             <div class="ta">{{ $archivo->titulo }}</div>
-                           <blockquote class="bro">
-                                
-                                <div> <b>Autor:</b>  {{ $archivo->autor }}</div>
-                                <div> <b>Publicación:</b>  {{ $archivo->created_at }}</div>
-                                <div> <b>Tipo:</b>  {{ $archivo->archivotipo->tipo }}</div>
-                           </blockquote>
-                           <div> <b>Descripción:</b></div>
-                            <div> {{ $archivo->decripcion }}</div>
-                            <div style="margin-top: 20px">
+                            <blockquote class="bro">
+                                <div class="row">
+                                    <div class="col-xs-6"> <b>Autor:</b> {{ $archivo->autor }}</div>
+                                    <div class="col-xs-6"> <b>Tipo:</b> {{ $archivo->archivotipo->tipo }}</div>
+                                </div>
+                            </blockquote>
+                            <div>
                                 <button class="btn btn-colegio" ng-click="plus({{ $archivo }});" data-toggle="modal" data-target="#mas"><i class="fa fa-plus"> </i> Información</button>
-
                                 <a href="archivo/{{ $archivo->id }}" alt="archivo" class="btn btn-colegio" /><i class="fa fa-eye" aria-hidden="true"></i> Ver Documento</a> 
                             </div>
-                            
                         </div>
                     @endforeach 
                     {!! $archivos->render() !!} 
@@ -72,14 +86,14 @@
                         <tbody>
                         
                             @foreach ($archivos as $y)
-                            @if ($y->posteador == Auth::user()->dni)
+                            @if ($y->posteador == Auth::user()->id)
                             <tr>
 
                                 <td>{{ $y->titulo }}</td>
                                 <td>{{ $y->autor }}</td>
                                 <td>
                                     <a ng-click="plus({{$y}});" data-toggle="modal" data-target="#editar"><i class="glyphicon glyphicon-pencil" style="color:black"></i></a>
-                                    <a ng-click="eliminar(y.id);"> <i class="glyphicon glyphicon-trash" style="color:black;margin-left: 10px"></i></a>
+                                    <a ng-click="eliminar({{$y->id}});"> <i class="glyphicon glyphicon-trash" style="color:black;margin-left: 10px"></i></a>
                                 </td>
                             </tr>
                             @endif
@@ -133,12 +147,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="edicion">Tipo de archivo</label>
-                                        <select class="form-control" name="archivotipo_id" required ng-model="archivotipo_id" ng-options="at.tipo for at in ats track by at.id">
+                                        <select class="form-control" name="archivotipo_id" id="archivotipo_id" required ng-model="archivotipo_id" ng-options="at.tipo for at in ats track by at.id">
                                             <option value="">Seleccione...</option>
                                         </select>
                                     </div>
 
-                                    <input type="hidden" name="posteador" value="{{Auth::user()->dni}}">
+                                    <input type="hidden" name="posteador" value="{{Auth::user()->id}}">
                                     <a ng-click='editarArchivo()' class="btn btn-colegio">Guardar</a>
                                 </form>
                             </div>
@@ -160,13 +174,12 @@
                             <blockquote class="bro">
                                 <div><b>Título: </b><span ng-bind="titulom"></span></div>
                                 <div><b>Autor: </b><span ng-bind="autorm"></span></div>
-                                <div><b>Fecha: </b><span ng-bind="fecham"></span></div>
                                 
                                 <div><b>Lugar de publicación: </b><span ng-bind="pub_lugar"></span></div>
                                 <div><b>Editorial: </b><span ng-bind="pub_editorial"></span></div>
                                 <div><b>Año: </b><span ng-bind="pub_year"></span></div>
-                                <div><b>Fecha: </b><span ng-bind="fecham"></span></div>
                                 <div><b>Edición: </b><span ng-bind="edicion"></span></div>
+
                             </blockquote>
                             <p ng-bind="descrip"></p>
                             <div id='frameVer'></div>  

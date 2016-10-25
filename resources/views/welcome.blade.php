@@ -23,6 +23,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('assets/GridGallery/css/component.css')}}" />
 		<script src="{{asset('assets/GridGallery/js/modernizr.custom.js')}}"></script>
 		<link rel="stylesheet" href="{{asset('assets/css/kira.css')}}" />
+		<link rel="stylesheet" href="{{asset('assets/css/theme-blue.css')}}" />
 
 
 
@@ -33,15 +34,15 @@
 			<div id="wrapper" style="" >
 
 				<!-- Header -->
-					<header id="header" style="height: 60px;background-color:#192473">
-						<h1><a href="/" style="color:white;font-size:1.5rem"><img src="{{asset('images/logo_izq.jpg')}}" alt="" width="150" style="padding-top: 0px" /></a></h1>
+					<header id="header" style="height: 60px">
+						<h1><a href="/"><img src="{{asset('images/logo-ix.png')}}" alt="" width="150" style="padding-top: 10px" /></a></h1>
 						<nav class="links">
 							<ul style="color:white">
 								
-								<li><a href="{{ url('/institucional') }}" style="font-size:.8rem">Institucional</a></li>
-								<li><a href="{{ url('/comunidad') }}" style="font-size:.8rem">Comunidad</a></li>
-								<li><a href="{{ url('/galeria') }}" style="font-size:.8rem">Galeria</a></li>
-								<li><a href="{{ url('/contacto') }}" style="font-size:.8rem">Contacto</a></li>
+								<li><a href="{{ url('/institucional') }}">Institucional</a></li>
+								<li><a href="{{ url('/comunidad') }}">Comunidad</a></li>
+								<li><a href="{{ url('/galeria') }}">Galeria</a></li>
+								<li><a href="{{ url('/contacto') }}">Contacto</a></li>
 							</ul>
 						</nav>
 						<nav class="main" >
@@ -118,7 +119,7 @@
 		
 
 			</div>
-			<footer class="foot" ng-controller="colegioController" ng-init="get2()" style="background-color:#192473">
+			<footer class="foot" ng-controller="colegioController" ng-init="get2()">
 				<section class="cont-foot row" ng-repeat="o in colegio">
 					<div class="col-md-6 rs">
 						<h4 style="color: white;font-size: 1rem">Redes Sociales</h4>

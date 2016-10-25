@@ -65,7 +65,7 @@ Monthly 2.0.7 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 		}
 
 		// Add Header & event list markup
-		$('#' + uniqueId).prepend('<div class="monthly-header"><div class="monthly-header-title"></div><a href="#"  class="monthly-prev"></a><a href="#" class="monthly-next"></a></div>').append('<div class="monthly-event-list"></div>');
+		$('#' + uniqueId).prepend('<div class="monthly-header"><div class="monthly-header-title"></div><a href="#"  class="monthly-prev" onclick="despues()"></a><a href="#" class="monthly-next" onclick="antes()"></a></div>').append('<div class="monthly-event-list"></div>');
 
 		// How many days are in this month?
 		function daysInMonth(m, y){

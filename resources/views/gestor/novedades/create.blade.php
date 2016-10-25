@@ -39,7 +39,7 @@
 						    <label for="fecha">Fecha de publicación</label>
 						    <input type="date" class="form-control" id="fecha" placeholder="2016-01-01" name="fecha" required>
 						</div>
-						<input type="hidden" name="posteador" value="{{Auth::user()->dni}}">
+						<input type="hidden" name="posteador" value="{{Auth::user()->id}}">
 						<button type="submit" class="btn btn-colegio">Guardar</button>
 	    			</form>
 	    		</div>

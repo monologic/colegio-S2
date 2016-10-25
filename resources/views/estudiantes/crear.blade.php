@@ -8,6 +8,11 @@
     	<div ng-controller="estudiantesController">
     		<div class="cart" style="max-width: 600px">
     			<h1 class="titulo">Crear Estudiante</h1>
+    			@if (isset($error))
+				    <div class="alert alert-danger">
+				        {{ $error }}
+				    </div>
+				@endif
     			<form role="form" method="POST" action="{{ url('app/estudiantes') }}">
     				{{ csrf_field() }}
     				<div class="form-group">

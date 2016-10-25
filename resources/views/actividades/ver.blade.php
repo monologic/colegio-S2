@@ -3,12 +3,21 @@
 @section('title', 'Actividades')
 
 @section('content')
-    <div ng-controller="actividadController" ng-init="get();">
+    <div ng-controller="actividadController" ng-init="get();getmes()" onload="getdata()">
         <div class="contenidos">
             <div class="col-md-6">
                 <div class="monthly" id="mycalendar" style="width: 98%;margin:20px auto 20px auto;box-shadow: 5px 5px 5px #888888;"></div>
             </div>
             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tipo">Tipo de Actividad</label>
+                    <select class="form-control" id="tipoActi" onchange="tablaBusqueda()">
+                        <option value="">Todas</option>
+                        <option value="Curricular">Curricular</option>
+                        <option value="Extracurricular">Extracurricular</option>
+                        <option value="Cocurricular">Co-curricular</option>
+                    </select>
+                </div>
                 <div class="actividades">
                     <div class="hed">
                         <span id="fec">Lista de actividades</span>
@@ -31,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="y in actividades" ng-if="{{Auth::user()->id}} ==  y.usuario_id ">
+                            <tr ng-repeat="y in actividades | filter : tipoAc " ng-if="{{Auth::user()->id}} ==  y.usuario_id ">
 
                                 <td>@{{ y.fecha_inicio }}</td>
                                 <td>@{{ y.titulo }}</td>
@@ -77,8 +86,16 @@
                                     </div>
                                     <div class="form-group">
                                             <b for="descripcion">Descripción</b>
-                                            <textarea  id="" cols="50" rows="10" name="descripcion" class="edit" ng-model="descripcion"></textarea>
-                                        </div>
+                                            <textarea  cols="50" id="act-des" rows="10" class="edit"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipo">Tipo</label>
+                                        <select class="form-control" name="tipo" id="tipo" ng-model="tipo" required>
+                                            <option value="Curricular">Curricular</option>
+                                            <option value="Extracurricular">Extracurricular</option>
+                                            <option value="Cocurricular">Co-curricular</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="lugar">Lugar</label>
                                         <input type="text" class="form-control" id="lugar" ng-model="lugar" placeholder="" name="lugar" required>
@@ -126,34 +143,76 @@
     <script src="{{ asset('assets/js/ng-scripts/controllers/actividadController.js') }}"></script>
     <script src="{{ asset('assets/calendar/js/monthly.js') }}"></script>
     <script type="text/javascript">
+    var f = new Date();
+        fe = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
     $(window).load( function() {
             $('#mycalendar').monthly({
                 
             });
-
-            $('#mycalendar2').monthly({
-                mode: 'picker',
-                target: '#mytarget',
-                setWidth: '250px',
-                startHidden: true,
-                showTrigger: '#mytarget',
-                stylePast: true,
-                disablePast: true
+            switch(window.location.protocol) {
+            case 'http:':
+            case 'https:':
+            // running on a server, should be good.
+            break;
+            case 'file:':
+                alert('Just a heads-up, events will not work when run locally.');
+            }
+            ds();
+    });
+            function ds(){
+                setTimeout('traerD()',500);
+            }
+            function traerD(){
+                $.ajax({
+                    type:'get',
+                    url:'../app/ac/'+fe,
+                    dataType:'json',
+                    success:function(ht)
+                    {   
+                        impr2(ht);
+                    }
+                });
+            }
+            function impr2(data){
+                for (var i = 0; i < data.length; i++) {
+                    rd = data[i].fecha.split(' ');
+                    a = rd[0].split('-');
+                    dia = parseInt(a[2])+'-'+ parseInt(a[1]) + '-' + a[0];
+                    $("#"+dia).append( "<p><div class='alert-num'>"+ data[i].cantidad +"</div class='alert-num'></p>" );
+                }
+                    
+            }
+        nx = 1;
+        function antes() {
+            setTimeout('cambiarm()',500);
+            nx = 1;
+        }
+        function despues() {
+            setTimeout('cambiarm()',500);
+            nx = 0;
+        }
+        function cambiarm(){
+            nf = fe.split('-');
+            if (nx == 1) {
+                fe = f.getFullYear() + "-" + (parseInt(nf[1]) + 1) + "-01" ;
+            }
+            else{
+                fe = f.getFullYear() + "-" + (parseInt(nf[1]) - 1) + "-01" ;
+            }
+            $.ajax({
+                type:'get',
+                url:'../app/ac/'+fe,
+                dataType:'json',
+                success:function(ht)
+                {   
+                    impr2(ht);
+                    console.log(ht);
+                }
             });
 
-        switch(window.location.protocol) {
-        case 'http:':
-        case 'https:':
-        // running on a server, should be good.
-        break;
-        case 'file:':
-        alert('Just a heads-up, events will not work when run locally.');
         }
-
-        });
-    </script>
-    <script>
-        var m=new Array();
+        var m = new Array();
+        var dt = new Array();
         function buscar(dia,mes,año)
         {
             $('.monthly-day-pick').removeClass("activs");
@@ -168,33 +227,71 @@
                 dataType:'json',
                 success:function(ht)
                 {   
-                    m=ht;
+                    dt = ht;
                     tablaBusqueda();
                 }
             });
             
         }
         function tablaBusqueda()
-        {   nm=m.length;
+        {   
+            m = [];
+            $('#results').html('');
+            nm = dt.length;
             c=1;
-            if (nm==0) {
+            if (nm == 0) {
                 html="<h2 class='text-center nc'>No se encontraron actividades</h2>"
             }
             else
             {
-              html="<div class='ac'>"
-                for(i=0;i<nm;i++)
-                {   
-                    var hora= m[i]['fecha_inicio'].split(" ");
-
-                    html+="<button class='activity cla' type='button' data-toggle='collapse' data-target='#cont"+i+"' aria-expanded='false' aria-controls='collapseExample'><div class='col-md-6'><i class='fa fa-clock-o'></i> "+hora[1]+"</div> <div class='col-md-6'><i class='fa fa-flag' aria-hidden='true'></i> "+m[i]['titulo']+"</div>    </button><div class='collapse' id='cont"+i+"'><div class='well'><ul class='listas'><li><i class='fa fa-user' aria-hidden='true'></i> &nbsp <b>Responsable :</b> "+m[i]['responsable']+"</li><li><i class='fa fa-clock-o' aria-hidden='true'></i> &nbsp <b>Fecha inicio :</b> "+m[i]['fecha_inicio']+"</li><li><i class='fa fa-clock-o' aria-hidden='true'></i> &nbsp <b>Fecha término :</b> "+m[i]['fecha_fin']+"</li><li><i class='fa fa-map-marker' aria-hidden='true'></i> &nbsp <b>Lugar :</b> "+m[i]['lugar']+"</li><li><i class='fa fa-users' aria-hidden='true'></i> &nbsp <b>Participantes :</b> "+m[i]['participantes']+"</li></ul><p class='pes'>"+m[i]['descripcion']+"</p></div></div>";
-                    c++;
+                inp = $('#tipoActi').val();
+                if(inp == ''){
+                    //alert('con todo');
+                    m = dt;
+                    imprimir(nm,m); 
                 }
-                html+="</div>"   
+                else
+                {
+
+                    for (var i = 0; i < nm; i++) {
+                        if(dt[i]['tipo'] == inp){
+                            m.push(dt[i]);
+                        }
+                    }
+                    console.log(m);
+                    imprimir(m.length,m); 
+                }   
             }
            
             $('#results').html(html);
         }
+        function imprimir(nm,m){
+            c=m.length;
+            html="<div class='ac'>";
+                if(c == 0){
+                    t =$('#tipoActi').val();
+                    if(t == 'Cocurricular'){
+                        e = t.split('o');
+                        t = "Co-"+e[1];
+                    }
+                    html="<h2 class='text-center nc'>No se encontraron actividades "+t+"es </h2>"
+                }
+                else{
+                    for(i=0;i<nm;i++)
+                    {   
+                        var hora= m[i]['fecha_inicio'].split(" ");
+
+                        html+="<button class='activity cla' type='button' data-toggle='collapse' data-target='#cont"+i+"' aria-expanded='false' aria-controls='collapseExample'><div class='col-md-4 col-xs-4'><i class='fa fa-share-alt' aria-hidden='true'></i> "+m[i]['tipo']+"</div><div class='col-md-4 col-xs-4 mid'><i class='fa fa-clock-o'></i> "+hora[1]+"</div> <div class='col-md-4 col-xs-4'><i class='fa fa-flag' aria-hidden='true'></i> "+m[i]['titulo']+"</div>    </button><div class='collapse' id='cont"+i+"'><div class='well'><ul class='listas'><li><i class='fa fa-user' aria-hidden='true'></i> &nbsp <b>Responsable :</b> "+m[i]['responsable']+"</li><li><i class='fa fa-clock-o' aria-hidden='true'></i> &nbsp <b>Fecha inicio :</b> "+m[i]['fecha_inicio']+"</li><li><i class='fa fa-clock-o' aria-hidden='true'></i> &nbsp <b>Fecha término :</b> "+m[i]['fecha_fin']+"</li><li><i class='fa fa-map-marker' aria-hidden='true'></i> &nbsp <b>Lugar :</b> "+m[i]['lugar']+"</li><li><i class='fa fa-users' aria-hidden='true'></i> &nbsp <b>Participantes :</b> "+m[i]['participantes']+"</li></ul><p class='pes'>"+m[i]['descripcion']+"</p></div></div>";
+                        c++;
+                    }
+                    html+="</div>" 
+                }
+                $('#results').html(html); 
+        }
+        $( ".monthly-event-list" ).change(function() {
+          alert( "Handler for .change() called." );
+        });
+        
     </script>
 
     <script type="text/javascript" src="{{ asset('assets/froala/js/froala_editor.min.js') }}"></script>

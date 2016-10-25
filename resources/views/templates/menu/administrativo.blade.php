@@ -36,6 +36,12 @@
         </a>
     </li>
     <li>
+        <a href="{{ url('app/agenda') }}">
+            <i class="pe-7s-note"></i>
+            <p>Agenda</p>
+        </a>
+    </li>
+    <li>
         <a href="{{ url('app/album') }}">
             <i class="pe-7s-film"></i>
             <p>Galería</p>
@@ -51,6 +57,12 @@
         <a href="{{ url('app/comunidad') }}">
             <i class="pe-7s-way"></i>
             <p>Comunidad</p>
+        </a>
+    </li>
+    <li>
+        <a href="{{ url('app/estadistica') }}">
+            <i class="pe-7s-graph2"></i>
+            <p>Estadísticas</p>
         </a>
     </li>
     <li class="out-salir" style="display: none">
