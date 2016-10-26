@@ -20,6 +20,7 @@
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
                                 <th>DNI</th>
+                                <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -29,10 +30,9 @@
                                 <td>@{{ x.nombres }}</td>
                                 <td>@{{ x.apellidos }}</td>
                                 <td>@{{ x.dni }}</td>
+                                <td>@{{ x.estado }}<button class="btn" ng-click="cambiarEstado(x.id, x.estado);"><i class="glyphicon glyphicon-refresh"></i></button></td>
                                 <td>
                                     <a href="" ng-click="dataEditar(x);" data-toggle="modal" data-target="#editar" class="btn btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-
-                                    <button ng-click="eliminar(x.id);" class="btn btn-danger"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                                 </td>
                             </tr>
                         </tbody>

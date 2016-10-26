@@ -3,5 +3,5 @@
 @section('title', 'Bienvenido')
 
 @section('content')
-    <h1 class="titulo text-center" style="margin-top: 20%;">Bienvenido/a  {{Auth::user()->nombres}}</h1>
+    <h1 class="titulo text-center" style="margin-top: 20%;">{{ $mensaje }}</h1>
 @endsection

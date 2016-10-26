@@ -22,6 +22,7 @@
                                 <th>Nivel</th>
                                 <th>Grado</th>
                                 <th>Sección</th>
+                                <th>Estado</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -34,10 +35,9 @@
                                 <td>@{{ x.nivel }}</td>
                                 <td>@{{ x.grado }}</td>
                                 <td>@{{ x.seccion }}</td>
+                                <td>@{{ x.estado }}<button class="btn" ng-click="cambiarEstado(x.id, x.estado);"><i class="glyphicon glyphicon-refresh"></i></button></td>
                                 <td>
                                     <a href="" ng-click="dataEditar(x);" data-toggle="modal" data-target="#editar" class="btn btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-
-                                    <button ng-click="eliminar(x.id);" class="btn btn-danger"> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                                 </td>
                             </tr>
                         </tbody>
