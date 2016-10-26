@@ -83,5 +83,30 @@ app.controller('estudiantesController', function($scope,$http) {
             }
         );
     }
+    $scope.cambiarEstado = function (id, estado) {
+        swal({  title: "",
+                text: "Deseas cambiar el estado del Usuario?",
+                type: "warning",   
+                showCancelButton: true,   
+                confirmButtonColor: "#DD6B55",   
+                confirmButtonText: "Sí",
+                closeOnConfirm: false,
+                cancelButtonText:"Cancelar", }, 
+                function(){
+                    if (estado == 'Activo')
+                        estado = 'Inactivo';
+                    else if (estado == 'Inactivo')
+                        estado = 'Activo';
+
+                    $http.get('cambiarEstado/' + id + '/' + estado).then(function successCallback(response) {
+                            window.location.reload();
+                        }, function errorCallback(response) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                    });
+
+                }
+            );
+    }
 
 });

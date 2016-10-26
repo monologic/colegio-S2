@@ -66,5 +66,13 @@ class UserController extends Controller
 			
 		}*/
 	}
+
+	public function cambiarEstado($id, $estado)
+	{
+		$user = User::find($id);
+		$user->estado = $estado;
+		$user->save();
+
+	}
 	
 }

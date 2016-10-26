@@ -16,8 +16,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	$col = Colegio::all();
-    	\Auth::user()->url = $col[0]->url;
-        return view('docentes.welcome');
+        if (\Auth::user()->estado == 'Activo') {
+            $mensaje = "Bienvenido/a " . \Auth::user()->nombres;
+            $col = Colegio::all();
+            \Auth::user()->url = $col[0]->url;
+            return view('docentes.welcome')->with('mensaje', $mensaje);
+        }
+        else{
+            $mensaje = "Al parecer su usuario está inactivo.";
+            
+            return view('docentes.welcome')->with('mensaje', $mensaje);
+        }
+        
     }
 }

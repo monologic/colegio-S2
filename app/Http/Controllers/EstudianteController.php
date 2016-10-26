@@ -54,7 +54,7 @@ class EstudianteController extends Controller
             $estudiante->usuariotipo_id = 1;
             $estudiante->usuario = $request->dni;
             $estudiante->password = bcrypt($request->dni);
-
+            $docente->estado = 'Activo';
             $estudiante->save();
             return redirect('app/estudiantes');
         }

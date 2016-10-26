@@ -33,7 +33,10 @@ Route::get('mensajeenviado', function () {
 Route::post('send',  'ContactoController@send');
 
 
+
 Route::group(['prefix'=> 'app', 'middleware' => [ 'auth', 'web' ]], function(){
+
+Route::get('cambiarEstado/{id}/{estado}', 'UserController@cambiarEstado');
 
 	Route::get('/', 'HomeController@index');
 	Route::get('getPadre/{dni}', 'PadreController@getPadre');

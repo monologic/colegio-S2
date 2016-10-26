@@ -54,7 +54,7 @@ class AdministrativoController extends Controller
             $docente->usuariotipo_id = 3;
             $docente->usuario = $request->dni;
             $docente->password = bcrypt($request->dni);
-
+            $docente->estado = 'Activo';
             $docente->save();
             return redirect('app/administrativos');
         }

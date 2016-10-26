@@ -56,7 +56,7 @@ class PadreController extends Controller
             $padre->usuariotipo_id = 5;
             $padre->usuario = $request->dni;
             $padre->password = bcrypt($request->dni);
-
+            $docente->estado = 'Activo';
             $padre->save();
             return redirect('app/padres');
         }
